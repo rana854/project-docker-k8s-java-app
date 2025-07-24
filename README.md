@@ -6,11 +6,13 @@ This project demonstrates containerizing a Spring Boot application with a MySQL 
 
 ### create Dockerfile
 
-'''FROM openjdk:17-jdk-slim
+'''yaml
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY target/springboot-mysql-app-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]'''
+ENTRYPOINT ["java", "-jar", "app.jar"]
+'''
 
  ### Build the Docker Image 
 
@@ -27,7 +29,8 @@ docker push ranatarek/springboot-mysql-app:latest
 
  ### create docker-compose.yml
 
-'''version: '3.8'
+'''yaml
+version: '3.8'
 
 services:
   db:
@@ -55,7 +58,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
 
 volumes:
-  mysql-data: '''
+  mysql-data: 
+  '''
 
 ### run command
 
@@ -72,7 +76,8 @@ minikube start
 
 create mysql-secret.yaml
 
-'''apiVersion: v1
+'''yaml
+apiVersion: v1
 kind: Secret
 metadata:
   name: mysql-secret
@@ -125,14 +130,16 @@ spec:
   ports:
     - protocol: TCP
       port: 3306
-      targetPort: 3306 ''' 
+      targetPort: 3306 
+      ''' 
 
 
 ### Create App-Deployment
 
 create app-deployment.yaml
 
-'''apiVersion: apps/v1
+'''yaml
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springboot-app
@@ -176,7 +183,8 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-  type: ClusterIP '''
+  type: ClusterIP
+  '''
 
 
  ## Step4 : To Apply K8s Resources run
